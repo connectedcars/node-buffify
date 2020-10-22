@@ -1,0 +1,49 @@
+{
+  "name": "@connectedcars/buffify",
+  "version": "0.1.0",
+  "description": "Create stable buffer from object",
+  "main": "./build/dist/src/index.js",
+  "scripts": {
+    "test": "TZ=UTC jest",
+    "cov": "TZ=UTC jest --coverage=true",
+    "build": "build src",
+    "build:js": "build --skip-typings src",
+    "build:types": "tsc --noEmit",
+    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
+    "ci-jest": "TZ=UTC jest --silent --no-color --json 2> /dev/null; res=$?; echo; exit $res",
+    "ci-audit": "npm audit --json || true",
+    "ci-eslint": "eslint --format json './src/**/*.{ts,tsx}' || true",
+    "prepare": "echo \"Make npm install devDependencies for this package by having a prepare script\"",
+    "prepack": "npm run build",
+    "prepublishOnly": "rm -rf build"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "7.12.0",
+    "@babel/core": "7.12.0",
+    "@babel/plugin-proposal-class-properties": "7.10.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.12.0",
+    "@babel/plugin-proposal-numeric-separator": "7.12.0",
+    "@babel/plugin-proposal-optional-chaining": "7.12.0",
+    "@babel/preset-env": "7.12.0",
+    "@babel/preset-typescript": "7.12.0",
+    "@connectedcars/setup": "^0.11.1",
+    "@types/jest": "26.0.14",
+    "@typescript-eslint/eslint-plugin": "4.4.1",
+    "@typescript-eslint/parser": "4.4.1",
+    "babel-jest": "26.5.2",
+    "eslint": "7.11.0",
+    "eslint-config-prettier": "6.12.0",
+    "eslint-plugin-prettier": "3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "jest": "26.5.3",
+    "prettier": "2.1.2",
+    "typescript": "4.0.3"
+  },
+  "dependencies": {},
+  "engines": {
+    "node": ">=10.15.0"
+  }
+}
