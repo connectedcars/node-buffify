@@ -2,7 +2,7 @@
   "name": "@connectedcars/buffify",
   "version": "0.1.0",
   "description": "Create stable buffer from object",
-  "main": "index.ts",
+  "main": "./build/dist/src/index.js",
   "scripts": {
     "test": "TZ=UTC jest",
     "cov": "TZ=UTC jest --coverage=true",
