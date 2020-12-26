@@ -97,7 +97,7 @@ describe('json-utils', () => {
     }
 
     const buffer = jsonBuffify(nestedSample, (_key, value, _level, keyPath) => {
-      return '.node2.objects[0].key' == keyPath ? undefined : value
+      return '.node2.objects[0].key' === keyPath ? undefined : value
     })
     const jsonString = buffer.toString('utf8')
     const sample2 = JSON.parse(jsonString)
