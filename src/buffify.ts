@@ -2,10 +2,11 @@ import crypto from 'crypto'
 
 // https://github.com/microsoft/TypeScript/issues/1897
 export type Json = null | boolean | number | string | Json[] | { [prop: string]: Json | undefined }
+
 export type JsonReplacer = (
   this: { [prop: string]: Json | undefined },
   key: string,
-  value: Json,
+  value: Json | undefined,
   level: number,
   keyPath: string
 ) => Json | undefined
@@ -50,7 +51,7 @@ function _jsonBuffify(json: Json, replace: JsonReplacer, space: string, level = 
           values.push(Buffer.from('[]', 'utf8'))
         }
       } else {
-        const obj = json as { [key: string]: Json }
+        const obj = json as { [key: string]: Json | undefined }
         const keys = Object.keys(json).sort()
         if (keys.length > 0) {
           values.push(Buffer.from('{' + lineBreak, 'utf8'))
