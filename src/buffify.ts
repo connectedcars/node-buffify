@@ -11,11 +11,18 @@ export type JsonReplacer = (
   keyPath: string
 ) => Json | undefined
 
+/**
+ * Implements the interface from JSON.stringify(obj, replace, indentation) with a few additions and a stable output returned as a Buffer
+ * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
+ * @param json JSON object
+ * @param replace replacer function
+ * @param space number of spaces or a string that will be used as indentation
+ */
 export function jsonBuffify(json: Json, replace?: JsonReplacer | null, space: number | string = ''): Buffer {
   return _jsonBuffify(
     json,
     replace ? replace : (_, value) => value,
-    typeof space === 'number' ? ' '.repeat(space) : space
+    typeof space === 'number' ? ' '.repeat(space) : space.slice(0, 10)
   )
 }
 
