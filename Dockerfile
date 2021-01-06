@@ -2,6 +2,8 @@ ARG NODE_VERSION=12.x
 
 FROM gcr.io/connectedcars-staging/node-builder.master:$NODE_VERSION as builder
 
+ARG COMMIT_SHA=master
+
 WORKDIR /app
 
 USER builder
@@ -14,10 +16,4 @@ RUN npm install
 RUN npm run build
 
 # Run ci checks
-RUN npm run ci-audit
-
-RUN npm run ci-jest
-
-RUN npm run ci-eslint
-
-RUN npm test
+RUN npm run ci-auto

@@ -11,15 +11,17 @@
     "build:types": "tsc --noEmit",
     "lint": "eslint './src/**/*.{ts,tsx}'",
     "lint:fix": "eslint --fix './src/**/*.{ts,tsx}'",
-    "ci-jest": "TZ=UTC jest --silent --no-color --json 2> /dev/null; res=$?; echo; exit $res",
-    "ci-audit": "npm audit --json || true",
-    "ci-eslint": "eslint --format json './src/**/*.{ts,tsx}' || true",
+    "ci-auto": "checks auto --hard-fail",
     "prepare": "echo \"Make npm install devDependencies for this package by having a prepare script\"",
     "prepack": "npm run build",
     "prepublishOnly": "rm -rf build"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:connectedcars/node-buffify.git"
+  },
+  "author": "Troels Liebe Bentsen<troels@connectedcars.dk>",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "7.12.10",
     "@babel/core": "7.12.10",
@@ -30,6 +32,7 @@
     "@babel/preset-env": "7.12.11",
     "@babel/preset-typescript": "7.12.7",
     "@connectedcars/setup": "^0.12.0",
+    "@connectedcars/test": "^0.12.0",
     "@types/jest": "26.0.19",
     "@typescript-eslint/eslint-plugin": "4.12.0",
     "@typescript-eslint/parser": "4.12.0",
