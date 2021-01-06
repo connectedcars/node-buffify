@@ -18,8 +18,8 @@
     "prepack": "npm run build",
     "prepublishOnly": "rm -rf build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Troels Liebe Bentsen<troels@connectedcars.dk>",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "7.12.10",
     "@babel/core": "7.12.10",
