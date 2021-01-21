@@ -112,4 +112,10 @@ describe('json-utils', () => {
       }
     })
   })
+
+  it('should sort keys based on sorter function and true should be first property', () => {
+    const buffer = jsonBuffify(sample, null, 2, (a, b) => b.localeCompare(a))
+    const jsonString = buffer.toString('utf8')
+    expect(jsonString).toMatch(/^{\s+"true"/s)
+  })
 })

@@ -11,6 +11,14 @@ export type JsonReplacer = (
   keyPath: string
 ) => Json | undefined
 
+export type JsonSorter = (
+  this: { [prop: string]: Json | undefined },
+  a: string,
+  b: string,
+  level: number,
+  keyPath: string
+) => number
+
 /**
  * Implements the interface from JSON.stringify(obj, replace, indentation) with a few additions and a stable output returned as a Buffer
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify
@@ -18,15 +26,28 @@ export type JsonReplacer = (
  * @param replace replacer function
  * @param space number of spaces or a string that will be used as indentation
  */
-export function jsonBuffify(json: Json, replace?: JsonReplacer | null, space: number | string = ''): Buffer {
+export function jsonBuffify(
+  json: Json,
+  replace?: JsonReplacer | null,
+  space: number | string = '',
+  sorter?: JsonSorter
+): Buffer {
   return _jsonBuffify(
     json,
     replace ? replace : (_, value) => value,
+    sorter ? sorter : (a, b) => a.localeCompare(b),
     typeof space === 'number' ? ' '.repeat(space) : space.slice(0, 10)
   )
 }
 
-function _jsonBuffify(json: Json, replace: JsonReplacer, space: string, level = 1, keyPath = ''): Buffer {
+function _jsonBuffify(
+  json: Json,
+  replace: JsonReplacer,
+  sorter: JsonSorter,
+  space: string,
+  level = 1,
+  keyPath = ''
+): Buffer {
   const propIndentation = space.length > 0 ? space.repeat(level) : ''
   const endIndentation = space.length > 0 && level > 1 ? space.repeat(level - 1) : ''
   const keyValueSpace = space.length > 0 ? ' ' : ''
@@ -51,7 +72,7 @@ function _jsonBuffify(json: Json, replace: JsonReplacer, space: string, level = 
               values.push(Buffer.from(',' + lineBreak, 'utf8'))
             }
             values.push(Buffer.from(propIndentation))
-            values.push(_jsonBuffify(value, replace, space, level + 1, `${keyPath}[${i}]`))
+            values.push(_jsonBuffify(value, replace, sorter, space, level + 1, `${keyPath}[${i}]`))
           }
           values.push(Buffer.from(lineBreak + endIndentation + ']', 'utf8'))
         } else {
@@ -59,7 +80,7 @@ function _jsonBuffify(json: Json, replace: JsonReplacer, space: string, level = 
         }
       } else {
         const obj = json as { [key: string]: Json | undefined }
-        const keys = Object.keys(json).sort()
+        const keys = Object.keys(json).sort((a, b) => sorter.bind(obj)(a, b, level, keyPath))
         if (keys.length > 0) {
           values.push(Buffer.from('{' + lineBreak, 'utf8'))
           for (const key of keys) {
@@ -69,7 +90,7 @@ function _jsonBuffify(json: Json, replace: JsonReplacer, space: string, level = 
                 values.push(Buffer.from(',' + lineBreak, 'utf8'))
               }
               values.push(Buffer.from(propIndentation + JSON.stringify(key) + ':' + keyValueSpace, 'utf8'))
-              values.push(_jsonBuffify(value, replace, space, level + 1, `${keyPath}.${key}`))
+              values.push(_jsonBuffify(value, replace, sorter, space, level + 1, `${keyPath}.${key}`))
             }
           }
           values.push(Buffer.from(lineBreak + endIndentation + '}', 'utf8'))
