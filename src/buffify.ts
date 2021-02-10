@@ -1,7 +1,7 @@
 import crypto from 'crypto'
 
 // https://github.com/microsoft/TypeScript/issues/1897
-export type Json = null | boolean | number | string | Json[] | { [prop: string]: Json | undefined }
+export type Json = null | boolean | number | string | Json[] | Date | { [prop: string]: Json | undefined }
 
 export type JsonReplacer = (
   this: { [prop: string]: Json | undefined },
@@ -78,6 +78,8 @@ function _jsonBuffify(
         } else {
           values.push(Buffer.from('[]', 'utf8'))
         }
+      } else if (json instanceof Date) {
+        values.push(Buffer.from(`"${json.toISOString()}"`, 'utf8'))
       } else {
         const obj = json as { [key: string]: Json | undefined }
         const keys = Object.keys(json).sort((a, b) => sorter.bind(obj)(a, b, level, keyPath))

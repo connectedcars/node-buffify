@@ -118,4 +118,16 @@ describe('json-utils', () => {
     const jsonString = buffer.toString('utf8')
     expect(jsonString).toMatch(/^{\s+"true"/s)
   })
+
+  it('should convert Date', () => {
+    const sample = {
+      date: new Date('2021-01-09T18:11:34.309Z')
+    }
+    const buffer = jsonBuffify(sample)
+    const jsonString = buffer.toString('utf8')
+    const obj = JSON.parse(jsonString)
+    expect(obj).toMatchObject({
+      date: '2021-01-09T18:11:34.309Z'
+    })
+  })
 })
