@@ -2,7 +2,11 @@
   "name": "@connectedcars/buffify",
   "version": "0.3.0",
   "description": "Create stable buffer from object",
-  "main": "./build/dist/src/index.js",
+  "main": "build/dist/src/index.js",
+  "types": "build/dist/src/index.d.ts",
+  "files": [
+    "build/dist"
+  ],
   "scripts": {
     "test": "TZ=UTC jest",
     "cov": "TZ=UTC jest --coverage=true",
@@ -16,9 +20,6 @@
     "prepack": "npm run build",
     "prepublishOnly": "rm -rf build"
   },
-  "files":[
-    "build"
-  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:connectedcars/node-buffify.git"
