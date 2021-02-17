@@ -16,6 +16,9 @@
     "prepack": "npm run build",
     "prepublishOnly": "rm -rf build"
   },
+  "files":[
+    "build"
+  ],
   "repository": {
     "type": "git",
     "url": "git@github.com:connectedcars/node-buffify.git"
