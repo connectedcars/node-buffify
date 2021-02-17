@@ -1,5 +1,5 @@
 steps:
-  - name: 'gcr.io/connectedcars-staging/github-connectedcars-cloudbuilder-wrapper.master:latest'
+  - name: 'gcr.io/connectedcars-staging/cloudbuilder-wrapper.master:latest'
     args: ['--secret-build-vars=NPM_TOKEN', '--update-url=https://build-api.connectedcars.io/cloudbuilder']
     secretEnv:
       - 'NPM_TOKEN'
