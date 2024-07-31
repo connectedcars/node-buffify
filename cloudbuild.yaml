@@ -1,6 +1,6 @@
 steps:
   - name: 'europe-west1-docker.pkg.dev/connectedcars-build/cloudbuilder-wrapper/master'
-    args: ['--secret-build-vars=NPM_TOKEN', '--update-url=https://build-api.connectedcars.io/cloudbuilder']
+    args: ['--secret-build-vars=NPM_TOKEN', '--skip-push', '--update-url=https://build-api.connectedcars.io/cloudbuilder']
     secretEnv:
       - 'NPM_TOKEN'
     env:
